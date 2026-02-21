@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { prisma } from "../lib/prisma";
 import { userRole } from "../../generated/prisma/enums";
+import config from "../config";
 
 const auth = (...roles: userRole[]) => {
    return async (req: Request, res: Response, next: NextFunction) => {
@@ -14,8 +15,7 @@ const auth = (...roles: userRole[]) => {
          }
 
          // VERIFY IT
-         const jwtSecret = process.env.JWTSECRET;
-         const decoded = jwt.verify(token, jwtSecret!) as JwtPayload;
+         const decoded = jwt.verify(token, config.jwtSecret!) as JwtPayload;
 
          // IS DECODED USER EXISTS
          const userData = await prisma.user.findUnique({
