@@ -34,7 +34,7 @@ const loginUser = async (req:Request, res:Response) => {
         })
 
         sendResponse(res, {
-            statusCode: 201,
+            statusCode: 200,
             success: true,
             message: "Login Successfull",
             data: result

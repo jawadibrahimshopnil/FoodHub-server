@@ -42,6 +42,8 @@ const auth = (...roles: userRole[]) => {
 
          req.user = newUserData;
 
+         next();
+
       } catch (error) {
          next(error);
       }
