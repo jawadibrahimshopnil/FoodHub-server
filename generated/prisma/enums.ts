@@ -9,13 +9,13 @@
 * 🟢 You can import this file directly.
 */
 
-export const Role = {
+export const userRole = {
   ADMIN: 'ADMIN',
   PROVIDER: 'PROVIDER',
   CUSTOMER: 'CUSTOMER'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type userRole = (typeof userRole)[keyof typeof userRole]
 
 
 export const UStatus = {
@@ -24,3 +24,14 @@ export const UStatus = {
 } as const
 
 export type UStatus = (typeof UStatus)[keyof typeof UStatus]
+
+
+export const OrderStatus = {
+  PLACED: 'PLACED',
+  PREPARING: 'PREPARING',
+  CANCELLED: 'CANCELLED',
+  READY: 'READY',
+  DELIVERED: 'DELIVERED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]

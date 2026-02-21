@@ -7,9 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
-
-
-enum Role {
+enum userRole {
   ADMIN
   PROVIDER
   CUSTOMER
@@ -20,14 +18,127 @@ enum UStatus {
   ACTIVATE
 }
 
-
 model User {
-    id        String   @id @default(uuid())
-    email     String   @unique
-    password  String
-    name      String
-    role      Role     @default(CUSTOMER)
-    status    UStatus  @default(ACTIVATE)
+  id       String   @id @default(uuid())
+  email    String   @unique
+  password String
+  name     String
+  role     userRole @default(CUSTOMER)
+  status   UStatus  @default(ACTIVATE)
 
-    @@map("users")
+  provider Provider?
+  orders   Order[]
+  reviews  Review[]
+
+  @@map("users")
+}
+
+model Provider {
+  id       String @id @default(uuid())
+  name     String
+  phone    String
+  address  String
+  photoUrl String
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  meals  Meal[]
+  orders Order[]
+
+  @@map("providers")
+}
+
+model Meal {
+  id          String @id @default(uuid())
+  name        String
+  photoUrl    String
+  price       Float
+  description String
+
+  providerId String
+  provider   Provider @relation(fields: [providerId], references: [id])
+
+  mealCategories Meal_Category[]
+  orderItems     OrderItem[]
+  reviews        Review[]
+
+  @@index([providerId, price])
+  @@map("meals")
+}
+
+model Category {
+  id   String @id @default(uuid())
+  name String
+  slug String @unique
+
+  mealCategories Meal_Category[]
+
+  @@map("categories")
+}
+
+model Meal_Category {
+  id String @id @default(uuid())
+
+  mealId String
+  meal   Meal   @relation(fields: [mealId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("meal_categories")
+}
+
+enum OrderStatus {
+  PLACED
+  PREPARING
+  CANCELLED
+  READY
+  DELIVERED
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  status      OrderStatus @default(PLACED)
+  total_price Float
+  orderDate   DateTime    @default(now())
+  address     String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  providerId String
+  provider   Provider @relation(fields: [providerId], references: [id])
+
+  orderItems OrderItem[]
+
+  @@index([orderDate, status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  mealId String
+  meal   Meal   @relation(fields: [mealId], references: [id])
+
+  @@map("order_items")
+}
+
+model Review {
+  id      String   @id @default(uuid())
+  comment String
+  date    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  mealId String
+  meal   Meal   @relation(fields: [mealId], references: [id])
+
+  @@map("reviews")
 }
