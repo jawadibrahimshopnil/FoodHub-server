@@ -3,6 +3,7 @@ import cors from 'cors';
 import { AuthRoutes } from './modules/Auth/auth.route';
 import { UserRoutes } from './modules/User/user.route';
 import router from './routes';
+import globalErrorHandler from './errors/globalErrorHandler';
 
 const app: Application = express();
 
@@ -17,6 +18,6 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Alhamdulillah FoodHub Server is running !');
 });
 
-// TODO: ERROR HANDELLING
+app.use(globalErrorHandler)
 
 export default app;
