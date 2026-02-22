@@ -55,6 +55,7 @@ model Meal {
   photoUrl    String
   price       Float
   description String
+  cuisine   String @default("Unknown")
 
   providerId String
   provider   Provider @relation(fields: [providerId], references: [id])
@@ -65,6 +66,25 @@ model Meal {
 
   @@index([providerId, price])
   @@map("meals")
+  mealDietaries MealDietary[]
+}
+
+model Dietary {
+  id   String @id @default(uuid())
+  name String @unique
+
+  meals MealDietary[]
+}
+
+model MealDietary {
+  id   String @id @default(uuid())
+  mealId    String
+  dietaryId String
+
+  meal     Meal    @relation(fields: [mealId], references: [id])
+  dietary  Dietary @relation(fields: [dietaryId], references: [id])
+
+  @@map("meal_dietaries")
 }
 
 model Category {

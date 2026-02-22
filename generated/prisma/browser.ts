@@ -33,6 +33,16 @@ export type Provider = Prisma.ProviderModel
  */
 export type Meal = Prisma.MealModel
 /**
+ * Model Dietary
+ * 
+ */
+export type Dietary = Prisma.DietaryModel
+/**
+ * Model MealDietary
+ * 
+ */
+export type MealDietary = Prisma.MealDietaryModel
+/**
  * Model Category
  * 
  */

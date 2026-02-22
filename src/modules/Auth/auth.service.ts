@@ -39,10 +39,12 @@ const loginUserInDB = async (payload:any) => {
         email: user.email
     }
 
-    const token = jwt.sign(userData, process.env.JWTSECRET!, {expiresIn: "1d"});
+    const token = jwt.sign(userData, process.env.JWTSECRET!, {expiresIn: "7d"});
+
+    const {password, ...newUser} = user;
 
     return {
-        user,
+        newUser,
         token
     }
 }

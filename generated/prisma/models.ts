@@ -11,6 +11,8 @@
 export type * from './models/User'
 export type * from './models/Provider'
 export type * from './models/Meal'
+export type * from './models/Dietary'
+export type * from './models/MealDietary'
 export type * from './models/Category'
 export type * from './models/Meal_Category'
 export type * from './models/Order'
