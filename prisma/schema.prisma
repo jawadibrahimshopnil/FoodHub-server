@@ -63,10 +63,10 @@ model Meal {
   mealCategories Meal_Category[]
   orderItems     OrderItem[]
   reviews        Review[]
+  mealDietaries MealDietary[]
 
   @@index([providerId, price])
   @@map("meals")
-  mealDietaries MealDietary[]
 }
 
 model Dietary {
@@ -74,6 +74,8 @@ model Dietary {
   name String @unique
 
   meals MealDietary[]
+
+  @@map("dietaries")
 }
 
 model MealDietary {
