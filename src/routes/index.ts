@@ -11,11 +11,11 @@ const routerManager = [
       route: AuthRoutes
    },
    {
-      path: "/user",
+      path: "/users",
       route: UserRoutes
    },
    {
-      path: "/meal",
+      path: "/meals",
       route: MealRoutes
    },
 ];
