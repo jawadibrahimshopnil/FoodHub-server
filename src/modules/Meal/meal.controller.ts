@@ -26,6 +26,22 @@ const createMeal = asyncHandler(async (req: Request, res: Response) => {
     })
 })
 
+const getMealById = asyncHandler(async (req: Request, res: Response) => {
+    const mealId = req.params.mealId as string;
+    console.log(`getMealById hited : ${mealId}`);
+
+    const result = await MealService.getMealByIdService(mealId);
+
+    sendResponse(res, {
+        statusCode: 201,
+        success: true,
+        message: "Meal created successfully",
+        data: result
+    });
+
+})
+
 export const MealController = {
-    createMeal
+    createMeal,
+    getMealById
 };

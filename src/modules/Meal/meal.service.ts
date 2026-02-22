@@ -10,6 +10,16 @@ const createMealToDB = async({id}: Provider, payload: any) => {
     })
 }
 
+const getMealByIdService = async (mealId: string) => {
+    console.log(`hitted getmealid service`);
+    return await prisma.meal.findFirstOrThrow({
+        where: {
+            id: mealId
+        }
+    })
+}
+
 export const MealService = {
-    createMealToDB
+    createMealToDB,
+    getMealByIdService
 };

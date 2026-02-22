@@ -6,5 +6,6 @@ import { userRole } from '../../../generated/prisma/enums';
 const router = express.Router();
 
 router.post("/", auth(userRole.PROVIDER), MealController.createMeal)
+router.get("/:mealId", MealController.getMealById)
 
 export const MealRoutes = router;
