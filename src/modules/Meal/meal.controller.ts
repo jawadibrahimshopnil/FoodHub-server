@@ -41,7 +41,27 @@ const getMealById = asyncHandler(async (req: Request, res: Response) => {
 
 })
 
+const updateMealById = asyncHandler(async (req: Request, res: Response) => {
+    const mealId = req.params.mealId as string;
+    const userId = req.user?.id;
+    const payload = req.body
+
+    const result = await MealService.updateMealService(userId, mealId, payload);
+
+    if(result.count === 0){
+        throw new Error("Unauthorized or meal not found");
+    }
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Meal updated successfully",
+        data: result
+    });
+})
+
 export const MealController = {
     createMeal,
-    getMealById
+    getMealById,
+    updateMealById
 };

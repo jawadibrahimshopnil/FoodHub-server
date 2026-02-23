@@ -1,4 +1,4 @@
-import { Provider } from "../../../generated/prisma/client";
+import { Meal, Prisma, Provider } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const createMealToDB = async({id}: Provider, payload: any) => {
@@ -19,7 +19,20 @@ const getMealByIdService = async (mealId: string) => {
     })
 }
 
+const updateMealService = async (userId: string, mealId: string, payload: Omit<Prisma.MealUpdateInput, 'id' | 'providerId'>) => {
+    return await prisma.meal.updateMany({
+        where: {
+            id: mealId,
+            provider: {
+                userId
+            }
+        },
+        data: payload
+    })
+}
+
 export const MealService = {
     createMealToDB,
-    getMealByIdService
+    getMealByIdService,
+    updateMealService
 };

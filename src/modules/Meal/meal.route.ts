@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post("/", auth(userRole.PROVIDER), MealController.createMeal)
 router.get("/:mealId", MealController.getMealById)
+router.patch("/:mealId", auth(userRole.PROVIDER), MealController.updateMealById)
 
 export const MealRoutes = router;
