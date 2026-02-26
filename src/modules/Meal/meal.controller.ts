@@ -28,7 +28,6 @@ const createMeal = asyncHandler(async (req: Request, res: Response) => {
 
 const getMealById = asyncHandler(async (req: Request, res: Response) => {
     const mealId = req.params.mealId as string;
-    console.log(`getMealById hited : ${mealId}`);
 
     const result = await MealService.getMealByIdService(mealId);
 
