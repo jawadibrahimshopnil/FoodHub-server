@@ -59,8 +59,22 @@ const updateMealById = asyncHandler(async (req: Request, res: Response) => {
     });
 })
 
+const getAllMeals = asyncHandler(async (req: Request, res: Response) => {
+    const filters = req.query;
+
+    const result = await MealService.getALlMealsService(filters);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All meals data",
+        data: result
+    });
+})
+
 export const MealController = {
     createMeal,
     getMealById,
-    updateMealById
+    updateMealById,
+    getAllMeals
 };

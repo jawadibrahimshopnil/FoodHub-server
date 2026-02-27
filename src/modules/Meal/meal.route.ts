@@ -5,7 +5,10 @@ import { userRole } from '../../../generated/prisma/enums';
 
 const router = express.Router();
 
+// api/v1/meals/
+
 router.post("/", auth(userRole.PROVIDER), MealController.createMeal)
+router.get("/", MealController.getAllMeals)
 router.get("/:mealId", MealController.getMealById)
 router.patch("/:mealId", auth(userRole.PROVIDER), MealController.updateMealById)
 

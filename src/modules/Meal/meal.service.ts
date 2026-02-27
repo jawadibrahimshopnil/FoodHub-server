@@ -1,4 +1,4 @@
-import { Meal, Prisma, Provider } from "../../../generated/prisma/client";
+import { Prisma, Provider } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const createMealToDB = async({id}: Provider, payload: any) => {
@@ -42,8 +42,64 @@ const updateMealService = async (userId: string, mealId: string, payload: Omit<P
     })
 }
 
+const getALlMealsService = async (filters: Record<string, any>) => {
+
+    const {cuisine, price, page, limit} = filters;
+
+    let {dietary} = filters;
+    if(dietary && !Array.isArray(dietary)) dietary = [dietary]
+
+    const p = Number(page) || 1;
+    const l = Number(limit) || 5;
+    const sortOrder = price  === 'desc' ? 'desc' : 'asc'; 
+
+    const skip = (p - 1 ) * l
+
+    let where:Prisma.MealWhereInput = {}
+
+    if (cuisine) where.cuisine = { equals: cuisine, mode: 'insensitive'}
+
+    if (dietary) {
+        where.mealDietaries = {
+            some: {
+                dietary: {
+                    name: {
+                        in: dietary,
+                        mode: 'insensitive'
+                    }
+                }
+            }
+        }
+    }
+
+    return await prisma.meal.findMany({
+        where,
+        orderBy: { price: sortOrder},
+        skip: skip,
+        take: l,
+        include: {
+            provider: {
+                select: {
+                    name: true,
+                    address: true
+                }
+            },
+            mealDietaries: {
+                select: {
+                    dietary: {
+                        select: {
+                            name: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
+
 export const MealService = {
     createMealToDB,
     getMealByIdService,
-    updateMealService
+    updateMealService,
+    getALlMealsService
 };
