@@ -33,10 +33,21 @@ const getAllProviders = asyncHandler(async (req:Request, res:Response) => {
     });
 })
 
+const getProviderById = asyncHandler(async (req:Request, res:Response) => {
+    const providerId = req.params.providerId as string;
 
+    const result = await ProviderService.getProviderByIdService(providerId);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "successfully got provider info",
+        data: result
+    });
+})
 
 export const ProviderController = {
     createProvider,
     getAllProviders,
-
+    getProviderById
 };

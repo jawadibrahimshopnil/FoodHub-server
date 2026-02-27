@@ -7,6 +7,8 @@ const router = express.Router();
 
 // api/v1/providers/
 
-router.post('/', auth(userRole.PROVIDER), ProviderController.createProvider)
+router.get('/', ProviderController.getAllProviders)
+router.get('/:providerId', ProviderController.getProviderById)
+router.post('/', auth(userRole.PROVIDER), ProviderController.createProvider);
 
 export const ProviderRoutes = router;

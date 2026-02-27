@@ -13,10 +13,31 @@ const getAllProvidersService = async () => {
     return await prisma.provider.findMany({})
 }
 
-
+const getProviderByIdService = async (providerId: string) => {
+    return await prisma.provider.findUniqueOrThrow({
+        where: {
+            id: providerId
+        },
+        include:{
+            meals: {
+                include:{
+                    mealDietaries: {
+                        select: {
+                            dietary: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+}
 
 export const ProviderService = {
     createProviderService,
     getAllProvidersService,
-
+    getProviderByIdService
 };
