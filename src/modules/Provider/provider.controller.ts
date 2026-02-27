@@ -22,6 +22,21 @@ const createProvider = asyncHandler(async (req:Request, res:Response) => {
     });
 })
 
+const getAllProviders = asyncHandler(async (req:Request, res:Response) => {
+    const result = await ProviderService.getAllProvidersService();
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Providers",
+        data: result
+    });
+})
+
+
+
 export const ProviderController = {
-    createProvider
+    createProvider,
+    getAllProviders,
+
 };

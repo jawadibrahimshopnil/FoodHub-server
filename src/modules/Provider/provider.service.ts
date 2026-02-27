@@ -9,6 +9,14 @@ const createProviderService = async (payload: Prisma.ProviderUncheckedCreateInpu
     });
 }
 
+const getAllProvidersService = async () => {
+    return await prisma.provider.findMany({})
+}
+
+
+
 export const ProviderService = {
-    createProviderService
+    createProviderService,
+    getAllProvidersService,
+
 };
