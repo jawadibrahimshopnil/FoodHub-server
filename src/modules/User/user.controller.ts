@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 import { UserService } from "./user.service";
+import asyncHandler from "../../utils/asyncHandler";
 
 const getUserProfile = async (req: Request, res: Response) => {
     try {
@@ -23,6 +24,23 @@ const getUserProfile = async (req: Request, res: Response) => {
     }
 }
 
+const updateUser = asyncHandler(async (req: Request, res: Response) => {
+    const payload = req.body;
+    const userEmail = req.user?.email;
+
+    console.log(userEmail, payload);
+
+    const result = await UserService.updateUserService(userEmail, payload);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "successfully updated user info",
+        data: result
+    });
+})
+
 export const UserController = {
-    getUserProfile
+    getUserProfile,
+    updateUser
 };

@@ -1,3 +1,4 @@
+import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const getProfileFromDB = async (data: any) =>{
@@ -16,6 +17,18 @@ const getProfileFromDB = async (data: any) =>{
     return newResult;
 } 
 
+const updateUserService = async (userEmail: string, payload:Prisma.UserUncheckedUpdateInput) => {
+    const {password, ...newResult} = await prisma.user.update({
+        where:{
+            email: userEmail
+        },
+        data: payload
+    });
+
+    return newResult;
+}
+
 export const UserService = {
-    getProfileFromDB
+    getProfileFromDB,
+    updateUserService
 };
