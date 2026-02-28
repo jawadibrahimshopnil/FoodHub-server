@@ -1,4 +1,4 @@
-import { Prisma } from "../../../generated/prisma/client";
+import { OrderStatus, Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 type CreateOrderPayload = {
@@ -101,8 +101,27 @@ const getOrderByIdDB = async (orderId:string) => {
     })
 }
 
+const updateOrderStatusDB = async (userId: string, orderId:string, status:OrderStatus) => {
+    const provider = await prisma.provider.findUniqueOrThrow({
+        where: {
+            userId 
+        }
+    })
+
+    return await prisma.order.update({
+        where: {
+            id: orderId,
+            providerId: provider.id
+        },
+        data: {
+            status
+        }
+    })
+}
+
 export const OrderService = {
     createOrderDB,
     viewProviderOdersDB,
-    getOrderByIdDB
+    getOrderByIdDB,
+    updateOrderStatusDB
 };

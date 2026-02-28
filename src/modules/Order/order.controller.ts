@@ -44,8 +44,24 @@ const getOrderById = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
+const updateOrderStatus = asyncHandler(async (req:Request, res: Response) => {
+    const orderId = req.params.orderId as string;
+    const {status} = req.body;
+    const userId = req.user?.id;
+
+    const result = await OrderService.updateOrderStatusDB(userId, orderId, status);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Order status updated successfully",
+        data: result
+    })
+})
+
 export const OrderController = {
     createOrder,
     viewProviderOrders,
-    getOrderById
+    getOrderById,
+    updateOrderStatus
 };

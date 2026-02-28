@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/', auth(userRole.PROVIDER), OrderController.viewProviderOrders)
 router.get('/:orderId', OrderController.getOrderById)
+router.patch('/:orderId', auth(userRole.PROVIDER),OrderController.updateOrderStatus)
 router.post('/', auth(userRole.CUSTOMER), OrderController.createOrder) 
 
 export const OrderRoutes = router;
