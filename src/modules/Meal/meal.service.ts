@@ -12,7 +12,6 @@ const createMealToDB = async({id}: Provider, payload: any) => {
 
 const getMealByIdService = async (mealId: string) => {
     return await prisma.meal.findFirstOrThrow({
-        //TODO: GET AND REVIEW
         where: {
             id: mealId
         },
@@ -23,9 +22,10 @@ const getMealByIdService = async (mealId: string) => {
                         select:{
                             name: true
                         }
-                    }
+                    },
                 }
-            }
+            },
+            reviews: true
         }
     })
 }
