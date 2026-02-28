@@ -28,7 +28,12 @@ const updateUserService = async (userEmail: string, payload:Prisma.UserUnchecked
     return newResult;
 }
 
+const viewAllUsersAdminDB = async () => {
+    return await prisma.user.findMany()
+}
+
 export const UserService = {
     getProfileFromDB,
-    updateUserService
+    updateUserService,
+    viewAllUsersAdminDB
 };

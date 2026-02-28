@@ -40,7 +40,20 @@ const updateUser = asyncHandler(async (req: Request, res: Response) => {
     });
 })
 
+const viewAllUsersAdmin = asyncHandler(async (req:Request, res: Response) => {
+
+    const result = await UserService.viewAllUsersAdminDB();
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Users retrived successfully",
+        data: result
+    })
+})
+
 export const UserController = {
     getUserProfile,
-    updateUser
+    updateUser,
+    viewAllUsersAdmin
 };

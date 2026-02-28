@@ -8,6 +8,7 @@ const router = express.Router();
 // api/v1/users/profile
 
 router.get("/profile", auth(userRole.CUSTOMER), UserController.getUserProfile)
+router.get("/all", auth(userRole.ADMIN), UserController.viewAllUsersAdmin)
 router.patch("/profile", auth(userRole.CUSTOMER, userRole.PROVIDER), UserController.updateUser)
 
 export const UserRoutes = router;
