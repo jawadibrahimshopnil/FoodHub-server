@@ -13,6 +13,25 @@ const createCategoryService = async (payload: Record<string, any>) => {
   });
 };
 
+const updateCategoryService = async (
+  categoryId: string,
+  payload: Record<string, any>
+) => {
+
+  const slug = createSlug(payload.name);
+
+  return prisma.category.update({
+    where: {
+      id: categoryId
+    },
+    data: {
+      name: payload.name,
+      slug
+    }
+  });
+};
+
 export const CategoryService = {
-    createCategoryService
+    createCategoryService,
+    updateCategoryService
 };

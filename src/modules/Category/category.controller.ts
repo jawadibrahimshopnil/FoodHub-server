@@ -15,6 +15,21 @@ const createCategory = asyncHandler(async (req:Request, res:Response) => {
     })
 })
 
+const updateCategory = asyncHandler(async (req:Request, res:Response) => {
+    const payload = req.body;
+    const categoryId = req.params.categoryId as string;
+
+    const result = await CategoryService.updateCategoryService(categoryId, payload)
+
+    sendResponse(res, {
+        statusCode: 201,
+        success: true,
+        message: "Category created successfully",
+        data: result
+    })
+})
+
 export const CategoryController = {
-    createCategory
+    createCategory,
+    updateCategory
 };
