@@ -31,6 +31,18 @@ const viewProviderOrders = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
+const viewAllOrderAdmin = asyncHandler(async (req:Request, res: Response) => {
+
+    const result = await OrderService.viewAllOrderAdminDB();
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Orders retrived successfully",
+        data: result
+    })
+})
+
 const getOrderById = asyncHandler(async (req:Request, res: Response) => {
     const orderId = req.params.orderId as string;
 
@@ -63,5 +75,6 @@ export const OrderController = {
     createOrder,
     viewProviderOrders,
     getOrderById,
-    updateOrderStatus
+    updateOrderStatus,
+    viewAllOrderAdmin
 };

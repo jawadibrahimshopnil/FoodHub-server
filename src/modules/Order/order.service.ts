@@ -119,9 +119,14 @@ const updateOrderStatusDB = async (userId: string, orderId:string, status:OrderS
     })
 }
 
+const viewAllOrderAdminDB = async () => {
+    return await prisma.order.findMany()
+}
+
 export const OrderService = {
     createOrderDB,
     viewProviderOdersDB,
     getOrderByIdDB,
-    updateOrderStatusDB
+    updateOrderStatusDB,
+    viewAllOrderAdminDB
 };
