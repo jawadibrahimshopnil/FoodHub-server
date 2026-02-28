@@ -5,12 +5,13 @@ import { UserRoutes } from './modules/User/user.route';
 import router from './routes';
 import globalErrorHandler from './errors/globalErrorHandler';
 import notFound from './errors/notFound';
+import config from './config';
 
 const app: Application = express();
 
 // parsers
 const allowedOrigins = [
-  'http://localhost:3000'
+  config.node_env === "development" ? 'http://localhost:3000' : config.frontend_url
 ];
 app.use(express.json());
 app.use(cors({
