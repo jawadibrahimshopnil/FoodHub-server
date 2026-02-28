@@ -7,6 +7,7 @@ const router = express.Router();
 
 //api/v1/orders
 
-router.post('/', auth(userRole.CUSTOMER), OrderController.createOrder)
+router.get('/', auth(userRole.PROVIDER), OrderController.viewProviderOrders)
+router.post('/', auth(userRole.CUSTOMER), OrderController.createOrder) 
 
 export const OrderRoutes = router;

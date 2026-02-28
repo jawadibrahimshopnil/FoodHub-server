@@ -76,6 +76,24 @@ const createOrderDB = async (userId: string, payload:CreateOrderPayload) => {
     return result
 }
 
+const viewProviderOdersDB = async (userId:string) => {
+    const provider = await prisma.provider.findUniqueOrThrow({
+        where: {
+            userId 
+        }
+    })
+
+    return await prisma.order.findMany({
+        where: {
+            providerId: provider.id
+        },
+        include: {
+            orderItems: true
+        }
+    })
+}
+
 export const OrderService = {
-    createOrderDB
+    createOrderDB,
+    viewProviderOdersDB
 };

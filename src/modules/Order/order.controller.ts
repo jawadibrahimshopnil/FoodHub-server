@@ -18,6 +18,20 @@ const createOrder = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
+const viewProviderOrders = asyncHandler(async (req:Request, res: Response) => {
+    const userId = req.user?.id;
+
+    const result = await OrderService.viewProviderOdersDB(userId);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Orders retrived successfully",
+        data: result
+    })
+})
+
 export const OrderController = {
-    createOrder
+    createOrder,
+    viewProviderOrders
 };
