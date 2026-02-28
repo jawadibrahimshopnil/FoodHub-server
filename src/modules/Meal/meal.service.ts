@@ -7,6 +7,7 @@ type CreateMealPayload = {
   price: number;
   description: string;
   cuisine?: string;
+  categoryIds?: string[];
   dietaryIds?: string[];
 };
 const createMealToDB = async(  provider: Provider, payload: CreateMealPayload) => {
@@ -25,6 +26,17 @@ const createMealToDB = async(  provider: Provider, payload: CreateMealPayload) =
                 }
             }
         };
+
+        // connect category
+        if (payload.categoryIds?.length) {
+            data.mealCategories = {
+                create: payload.categoryIds.map(categoryId => ({
+                category: {
+                    connect: { id: categoryId }
+                }
+                }))
+            };
+        }
 
         // connect dietary
         if(payload.dietaryIds?.length){
@@ -45,6 +57,15 @@ const createMealToDB = async(  provider: Provider, payload: CreateMealPayload) =
                 mealDietaries: {
                     select: {
                         dietary:{
+                            select:{
+                                name: true
+                            }
+                        },
+                    }
+                },
+                mealCategories: {
+                    select: {
+                        category:{
                             select:{
                                 name: true
                             }

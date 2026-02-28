@@ -31,7 +31,27 @@ const updateCategoryService = async (
   });
 };
 
+const deleteCategoryService = async (categoryId: string) => {
+
+  const relationCount = await prisma.meal_Category.count({
+    where: {
+      categoryId
+    }
+  });
+
+  if (relationCount > 0) {
+    throw new Error("Category is used in meals");
+  }
+
+  return prisma.category.delete({
+    where: {
+      id: categoryId
+    }
+  });
+};
+
 export const CategoryService = {
     createCategoryService,
-    updateCategoryService
+    updateCategoryService,
+    deleteCategoryService
 };
