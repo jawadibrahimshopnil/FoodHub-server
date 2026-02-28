@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/Auth/auth.route";
 import { UserRoutes } from "../modules/User/user.route";
 import { MealRoutes } from "../modules/Meal/meal.route";
 import { ProviderRoutes } from "../modules/Provider/provider.route";
+import { OrderRoutes } from "../modules/Order/order.route";
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const routerManager = [
    {
       path: "/providers",
       route: ProviderRoutes
+   },
+   {
+      path: "/orders",
+      route: OrderRoutes
    },
 ];
 
