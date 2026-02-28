@@ -52,8 +52,23 @@ const viewAllUsersAdmin = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
+const updateUserStatus = asyncHandler(async (req: Request, res: Response) => {
+    const {status} = req.body;
+    const userId = req.params.userId as string;
+
+    const result = await UserService.updateUserStatusService(userId, status);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "successfully updated user status",
+        data: result
+    });
+})
+
 export const UserController = {
     getUserProfile,
     updateUser,
-    viewAllUsersAdmin
+    viewAllUsersAdmin,
+    updateUserStatus
 };

@@ -1,4 +1,4 @@
-import { Prisma } from "../../../generated/prisma/client";
+import { Prisma, UStatus } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const getProfileFromDB = async (data: any) =>{
@@ -32,8 +32,24 @@ const viewAllUsersAdminDB = async () => {
     return await prisma.user.findMany()
 }
 
+const updateUserStatusService = async (
+  userId: string,
+  status: UStatus
+) => {
+
+  return prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      status
+    }
+  });
+};
+
 export const UserService = {
     getProfileFromDB,
     updateUserService,
-    viewAllUsersAdminDB
+    viewAllUsersAdminDB,
+    updateUserStatusService
 };

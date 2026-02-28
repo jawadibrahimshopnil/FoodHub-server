@@ -1,12 +1,58 @@
 import { Prisma, Provider } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
-const createMealToDB = async({id}: Provider, payload: any) => {
-    return await prisma.meal.create({
-        data: {
-            ...payload,
-            providerId: id
+type CreateMealPayload = {
+  name: string;
+  photoUrl: string;
+  price: number;
+  description: string;
+  cuisine?: string;
+  dietaryIds?: string[];
+};
+const createMealToDB = async(  provider: Provider, payload: CreateMealPayload) => {
+    return prisma.$transaction(async (tx) => {
+
+        const data: Prisma.MealCreateInput = {
+            name: payload.name,
+            photoUrl: payload.photoUrl,
+            price: payload.price,
+            description: payload.description,
+            cuisine: payload.cuisine ?? "Unknown",
+
+            provider: {
+                connect: {
+                id: provider.id
+                }
+            }
+        };
+
+        // connect dietary
+        if(payload.dietaryIds?.length){
+            data.mealDietaries = {
+                create: payload.dietaryIds.map(dietaryId => ({
+                    dietary: {
+                        connect: {
+                            id: dietaryId
+                        }
+                    }
+                }))
+            }
         }
+
+        return tx.meal.create({
+            data,
+            include:{
+                mealDietaries: {
+                    select: {
+                        dietary:{
+                            select:{
+                                name: true
+                            }
+                        },
+                    }
+                }
+            }
+        })
     })
 }
 

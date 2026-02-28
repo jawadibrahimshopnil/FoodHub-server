@@ -10,5 +10,6 @@ const router = express.Router();
 router.get("/profile", auth(userRole.CUSTOMER), UserController.getUserProfile)
 router.get("/all", auth(userRole.ADMIN), UserController.viewAllUsersAdmin)
 router.patch("/profile", auth(userRole.CUSTOMER, userRole.PROVIDER), UserController.updateUser)
+router.patch("/:userId", auth(userRole.ADMIN), UserController.updateUserStatus)
 
 export const UserRoutes = router;
