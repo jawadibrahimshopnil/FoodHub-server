@@ -11,7 +11,7 @@ const app: Application = express();
 
 // parsers
 const allowedOrigins = [
-  config.node_env === "development" ? 'http://localhost:3000' : config.frontend_url
+  config.node_env === "development" ? 'http://localhost:3000' : config.frontend_url!
 ];
 app.use(express.json());
 app.use(cors({
