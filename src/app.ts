@@ -9,8 +9,16 @@ import notFound from './errors/notFound';
 const app: Application = express();
 
 // parsers
+const allowedOrigins = [
+  'http://localhost:3000'
+];
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }));
 
 // application routes
 app.use('/api/v1', router);
