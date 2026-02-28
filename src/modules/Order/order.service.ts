@@ -93,7 +93,16 @@ const viewProviderOdersDB = async (userId:string) => {
     })
 }
 
+const getOrderByIdDB = async (orderId:string) => {
+    return await prisma.order.findUniqueOrThrow({
+        where: {
+            id: orderId
+        }
+    })
+}
+
 export const OrderService = {
     createOrderDB,
-    viewProviderOdersDB
+    viewProviderOdersDB,
+    getOrderByIdDB
 };

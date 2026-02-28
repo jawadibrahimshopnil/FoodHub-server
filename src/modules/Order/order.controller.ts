@@ -31,7 +31,21 @@ const viewProviderOrders = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
+const getOrderById = asyncHandler(async (req:Request, res: Response) => {
+    const orderId = req.params.orderId as string;
+
+    const result = await OrderService.getOrderByIdDB(orderId);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Order retrived successfully",
+        data: result
+    })
+})
+
 export const OrderController = {
     createOrder,
-    viewProviderOrders
+    viewProviderOrders,
+    getOrderById
 };

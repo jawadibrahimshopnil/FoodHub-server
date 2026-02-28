@@ -8,6 +8,7 @@ const router = express.Router();
 //api/v1/orders
 
 router.get('/', auth(userRole.PROVIDER), OrderController.viewProviderOrders)
+router.get('/:orderId', OrderController.getOrderById)
 router.post('/', auth(userRole.CUSTOMER), OrderController.createOrder) 
 
 export const OrderRoutes = router;
