@@ -22,14 +22,28 @@ const updateCategory = asyncHandler(async (req:Request, res:Response) => {
     const result = await CategoryService.updateCategoryService(categoryId, payload)
 
     sendResponse(res, {
-        statusCode: 201,
+        statusCode: 200,
         success: true,
-        message: "Category created successfully",
+        message: "Category u pdated successfully",
+        data: result
+    })
+})
+
+const deleteCategory = asyncHandler(async (req:Request, res:Response) => {
+    const categoryId = req.params.categoryId as string;
+
+    const result = await CategoryService.deleteCategoryService(categoryId)
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Category deleted successfully",
         data: result
     })
 })
 
 export const CategoryController = {
     createCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
 };
