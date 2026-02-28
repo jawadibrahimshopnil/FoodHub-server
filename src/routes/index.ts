@@ -5,6 +5,7 @@ import { MealRoutes } from "../modules/Meal/meal.route";
 import { ProviderRoutes } from "../modules/Provider/provider.route";
 import { OrderRoutes } from "../modules/Order/order.route";
 import { ReviewRoutes } from "../modules/Review/review.route";
+import { CategoryRoutes } from "../modules/Category/category.route";
 
 const router = Router();
 
@@ -32,6 +33,10 @@ const routerManager = [
    {
       path: "/reviews",
       route: ReviewRoutes
+   },
+   {
+      path: "/categories",
+      route: CategoryRoutes
    },
 ];
 
