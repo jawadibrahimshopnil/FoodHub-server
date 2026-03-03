@@ -4,6 +4,7 @@ import { AuthService } from "./auth.service";
 
 const createUser = async (req:Request, res: Response) => {
     try {
+        console.log("hitted auth ctrl");
         const result = await AuthService.createUserInDB(req.body);
 
         sendResponse(res, {
@@ -28,9 +29,11 @@ const loginUser = async (req:Request, res:Response) => {
         const result = await AuthService.loginUserInDB(req.body);
         
         res.cookie("token", result.token, {
-            secure: false,
             httpOnly: true,
-            sameSite: "strict"
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         })
 
         sendResponse(res, {
