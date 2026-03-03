@@ -139,7 +139,7 @@ const getALlMealsService = async (filters: Record<string, any>) => {
         }
     }
 
-    return await prisma.meal.findMany({
+    const data =  await prisma.meal.findMany({
         where,
         orderBy: { price: sortOrder},
         skip: skip,
@@ -162,6 +162,18 @@ const getALlMealsService = async (filters: Record<string, any>) => {
             }
         }
     })
+
+    const count = await prisma.meal.count();
+    const totalPage = Math.ceil(count / l);
+
+    return {
+        data,
+        meta: { 
+            count, 
+            totalPage, 
+            currentPage: p 
+        } 
+    }
 }
 
 export const MealService = {
