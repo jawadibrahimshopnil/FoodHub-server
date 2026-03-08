@@ -29,6 +29,18 @@ const updateCategory = asyncHandler(async (req:Request, res:Response) => {
     })
 })
 
+const getAllCategories = asyncHandler(async (req:Request, res:Response) => {
+
+    const result = await CategoryService.getAllCategoriesDB()
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "All Categories retrived successfully",
+        data: result
+    })
+})
+
 const deleteCategory = asyncHandler(async (req:Request, res:Response) => {
     const categoryId = req.params.categoryId as string;
 
@@ -43,6 +55,7 @@ const deleteCategory = asyncHandler(async (req:Request, res:Response) => {
 })
 
 export const CategoryController = {
+    getAllCategories,
     createCategory,
     updateCategory,
     deleteCategory

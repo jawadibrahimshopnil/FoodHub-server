@@ -50,7 +50,14 @@ const deleteCategoryService = async (categoryId: string) => {
   });
 };
 
+const getAllCategoriesDB = async () => {
+    return await prisma.category.findMany({
+        orderBy: { name: 'asc' }
+    });
+};
+
 export const CategoryService = {
+    getAllCategoriesDB,
     createCategoryService,
     updateCategoryService,
     deleteCategoryService
