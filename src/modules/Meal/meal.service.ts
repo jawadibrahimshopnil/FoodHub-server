@@ -116,6 +116,8 @@ const getALlMealsService = async (filters: Record<string, any>) => {
     let {dietary} = filters;
     if(dietary && !Array.isArray(dietary)) dietary = [dietary]
 
+    console.log("dietary",dietary);
+
     const p = Number(page) || 1;
     const l = Number(limit) || 5;
     const sortOrder = price  === 'desc' ? 'desc' : 'asc'; 
@@ -125,6 +127,10 @@ const getALlMealsService = async (filters: Record<string, any>) => {
     let where:Prisma.MealWhereInput = {}
 
     if (cuisine) where.cuisine = { equals: cuisine, mode: 'insensitive'}
+
+    dietary = dietary.map((d: string) =>
+        d.toLowerCase().trim()
+    );
 
     if (dietary) {
         where.mealDietaries = {
