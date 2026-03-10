@@ -5,7 +5,6 @@ import sendResponse from "../../utils/sendResponse";
 
 const createReview = asyncHandler(async (req:Request, res: Response) => {
     const userId = req.user?.id;
-    console.log(userId);
     const payload = req.body
 
     const result = await ReviewService.createReviewService(userId, payload);

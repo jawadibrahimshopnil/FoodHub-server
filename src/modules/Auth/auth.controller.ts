@@ -4,7 +4,6 @@ import { AuthService } from "./auth.service";
 
 const createUser = async (req:Request, res: Response) => {
     try {
-        console.log("hitted auth ctrl");
         const result = await AuthService.createUserInDB(req.body);
 
         sendResponse(res, {

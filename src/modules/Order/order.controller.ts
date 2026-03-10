@@ -5,7 +5,6 @@ import sendResponse from "../../utils/sendResponse";
 
 const createOrder = asyncHandler(async (req:Request, res: Response) => {
     const userId = req.user?.id;
-    console.log(userId);
     const payload = req.body
 
     const result = await OrderService.createOrderDB(userId, payload);

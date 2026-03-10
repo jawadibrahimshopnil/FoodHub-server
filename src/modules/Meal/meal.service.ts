@@ -116,8 +116,6 @@ const getALlMealsService = async (filters: Record<string, any>) => {
     let {dietary} = filters;
     if(dietary && !Array.isArray(dietary)) dietary = [dietary]
 
-    console.log("dietary",dietary);
-
     const p = Number(page) || 1;
     const l = Number(limit) || 5;
     const sortOrder = price  === 'desc' ? 'desc' : 'asc'; 

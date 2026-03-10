@@ -28,8 +28,6 @@ const updateUser = asyncHandler(async (req: Request, res: Response) => {
     const payload = req.body;
     const userEmail = req.user?.email;
 
-    console.log(userEmail, payload);
-
     const result = await UserService.updateUserService(userEmail, payload);
 
     sendResponse(res, {
