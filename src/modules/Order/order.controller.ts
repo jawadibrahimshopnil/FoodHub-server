@@ -18,10 +18,10 @@ const createOrder = asyncHandler(async (req:Request, res: Response) => {
     })
 })
 
-const viewProviderOrders = asyncHandler(async (req:Request, res: Response) => {
+const viewOrders = asyncHandler(async (req:Request, res: Response) => {
     const userId = req.user?.id;
 
-    const result = await OrderService.viewProviderOdersDB(userId);
+    const result = await OrderService.viewOdersDB(userId);
 
     sendResponse(res, {
         statusCode: 200,
@@ -73,7 +73,7 @@ const updateOrderStatus = asyncHandler(async (req:Request, res: Response) => {
 
 export const OrderController = {
     createOrder,
-    viewProviderOrders,
+    viewOrders,
     getOrderById,
     updateOrderStatus,
     viewAllOrderAdmin

@@ -7,7 +7,7 @@ const router = express.Router();
 
 //api/v1/orders
 
-router.get('/', auth(userRole.PROVIDER), OrderController.viewProviderOrders)
+router.get('/', auth(userRole.PROVIDER, userRole.CUSTOMER), OrderController.viewOrders)
 router.get('/all', auth(userRole.ADMIN), OrderController.viewAllOrderAdmin)
 router.get('/:orderId', OrderController.getOrderById)
 router.patch('/:orderId', auth(userRole.PROVIDER),OrderController.updateOrderStatus)

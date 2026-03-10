@@ -76,17 +76,27 @@ const createOrderDB = async (userId: string, payload:CreateOrderPayload) => {
     return result
 }
 
-const viewProviderOdersDB = async (userId:string) => {
-    const provider = await prisma.provider.findUniqueOrThrow({
+const viewOdersDB = async (userId:string) => {
+    const provider = await prisma.provider.findUnique({
         where: {
             userId 
         }
-    })
+    });
+    
+    let where = {}
+
+    if(provider){
+        where = {
+            providerId: provider.id
+        }
+    }else{
+        where = {
+            userId
+        }
+    }
 
     return await prisma.order.findMany({
-        where: {
-            providerId: provider.id
-        },
+        where,
         include: {
             orderItems: true
         }
@@ -125,7 +135,7 @@ const viewAllOrderAdminDB = async () => {
 
 export const OrderService = {
     createOrderDB,
-    viewProviderOdersDB,
+    viewOdersDB,
     getOrderByIdDB,
     updateOrderStatusDB,
     viewAllOrderAdminDB
