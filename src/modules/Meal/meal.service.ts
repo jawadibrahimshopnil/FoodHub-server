@@ -126,9 +126,9 @@ const getALlMealsService = async (filters: Record<string, any>) => {
 
     if (cuisine) where.cuisine = { equals: cuisine, mode: 'insensitive'}
 
-    dietary = dietary.map((d: string) =>
-        d.toLowerCase().trim()
-    );
+    if(dietary){
+        dietary = dietary.map((d: string) => d.toLowerCase().trim())
+    }
 
     if (dietary) {
         where.mealDietaries = {
