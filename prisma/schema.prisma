@@ -119,12 +119,20 @@ enum OrderStatus {
   DELIVERED
 }
 
+enum PaymentStatus {
+  COD
+  PENDING
+  PAID
+}
+
+
 model Order {
   id          String      @id @default(uuid())
   status      OrderStatus @default(PLACED)
   total_price Float
   orderDate   DateTime    @default(now())
   address     String
+  paymentStatus PaymentStatus @default(COD)
 
   userId String
   user   User   @relation(fields: [userId], references: [id])
