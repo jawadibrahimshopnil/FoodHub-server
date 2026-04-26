@@ -7,7 +7,7 @@ const createOrder = asyncHandler(async (req:Request, res: Response) => {
     const userId = req.user?.id;
     const payload = req.body
 
-    const result = await OrderService.createOrderDB(userId, payload);
+    const result = await OrderService.createOrderDB(userId, payload, 'COD');
 
     sendResponse(res, {
         statusCode: 201,
