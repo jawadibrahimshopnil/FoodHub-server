@@ -1,13 +1,14 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import { AuthRoutes } from './modules/Auth/auth.route';
-import { UserRoutes } from './modules/User/user.route';
 import router from './routes';
 import globalErrorHandler from './errors/globalErrorHandler';
 import notFound from './errors/notFound';
 import config from './config';
+import { paymentController } from './modules/Payments/payments.controller';
 
 const app: Application = express();
+
+app.post('/webhook', express.raw({type: 'application/json'}), paymentController.handleStripeWebhookEvent);
 
 // parsers
 const allowedOrigins = [
